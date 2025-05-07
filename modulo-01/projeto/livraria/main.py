@@ -21,12 +21,11 @@ def menu_principal() -> None:
     while True:
         console.clear()
         console.rule(title="Menu Principal", align="center")
-
         console.print("1 - Categorias\n" +
-                    "2 - Editoras\n" +
-                    "3 - Autores\n" + 
-                    "4 - Livros\n" +
-                    "5 - Sair")
+                      "2 - Editoras\n" +
+                      "3 - Autores\n" + 
+                      "4 - Livros\n" +
+                      "5 - Sair")
         console.rule(align="center")   
 
         opcao = console.input("\nInforme a opção desejada: ")
@@ -51,10 +50,10 @@ def menu_categorias() -> None:
         console.clear()
         console.rule(title="Menu Categorias", align="center")
         console.print("1 - Listar\n" +
-                    "2 - Cadastrar\n" +
-                    "3 - Excluir\n" + 
-                    "4 - Listar por Id\n" +
-                    "5 - Voltar")
+                      "2 - Cadastrar\n" +
+                      "3 - Excluir\n" + 
+                      "4 - Listar por Id\n" +
+                      "5 - Voltar")
         console.rule(align="center")    
         opcao = console.input("\nInforme a opção desejada: ")
         match opcao:
@@ -73,17 +72,85 @@ def menu_categorias() -> None:
                                 "continuar... ")
 
 
-
 def menu_editoras() -> None:
-    pass
+    while True:
+        console.clear()
+        console.rule(title="Menu Editoras", align="center")
+        console.print("1 - Listar\n" +
+                      "2 - Cadastrar\n" +
+                      "3 - Excluir\n" + 
+                      "4 - Listar por Id\n" +
+                      "5 - Voltar")
+        console.rule(align="center")    
+        opcao = console.input("\nInforme a opção desejada: ")
+        match opcao:
+            case "1":
+                pass
+            case "2":
+                pass
+            case "3":
+                pass
+            case "4":
+                pass
+            case "5":
+                break
+            case _:
+                console.input("\n[red]Opção inválida. Pressione enter para " + 
+                                "continuar... ")
 
 
 def menu_autores() -> None:
-    pass
+    while True:
+        console.clear()
+        console.rule(title="Menu Autores", align="center")
+        console.print("1 - Listar\n" +
+                      "2 - Cadastrar\n" +
+                      "3 - Excluir\n" + 
+                      "4 - Listar por Id\n" +
+                      "5 - Voltar")
+        console.rule(align="center")    
+        opcao = console.input("\nInforme a opção desejada: ")
+        match opcao:
+            case "1":
+                pass
+            case "2":
+                pass
+            case "3":
+                pass
+            case "4":
+                pass
+            case "5":
+                break
+            case _:
+                console.input("\n[red]Opção inválida. Pressione enter para " + 
+                                "continuar... ")
 
 
 def menu_livros() -> None:
-    pass
+    while True:
+        console.clear()
+        console.rule(title="Menu Livros", align="center")
+        console.print("1 - Listar\n" +
+                      "2 - Cadastrar\n" +
+                      "3 - Excluir\n" + 
+                      "4 - Listar por Id\n" +
+                      "5 - Voltar")
+        console.rule(align="center")    
+        opcao = console.input("\nInforme a opção desejada: ")
+        match opcao:
+            case "1":
+                pass
+            case "2":
+                pass
+            case "3":
+                pass
+            case "4":
+                pass
+            case "5":
+                break
+            case _:
+                console.input("\n[red]Opção inválida. Pressione enter para " + 
+                                "continuar... ")
 
 
 if __name__ == "__main__":
