@@ -11,11 +11,25 @@ def main() -> None:
     editoras: list[str] = list()
     autores: list[str] = list()
     livros: list[str] = list()
+    
+    menu_principal()
+    console.input("\n[red]Pressione enter para finalizar...")
+    console.clear()
 
+
+def menu_principal() -> None:
     while True:
-        menu_principal()
-        opcao = console.input("\nInforme a opção desejada: ")
+        console.clear()
+        console.rule(title="Menu Principal", align="center")
 
+        console.print("1 - Categorias\n" +
+                    "2 - Editoras\n" +
+                    "3 - Autores\n" + 
+                    "4 - Livros\n" +
+                    "5 - Sair")
+        console.rule(align="center")   
+
+        opcao = console.input("\nInforme a opção desejada: ")
         match opcao:
             case "1":
                 menu_categorias()
@@ -29,25 +43,35 @@ def main() -> None:
                 break
             case _:
                 console.input("\n[red]Opção inválida. Pressione enter para " + 
-                              "continuar... ")
-
-    console.input("\n[red]Pressione enter para finalizar...")
-    console.clear()
-
-
-def menu_principal() -> None:
-    console.clear()
-    console.rule(title="Menu Principal", align="center")
-    console.print("1 - Categorias")
-    console.print("2 - Editoras")
-    console.print("3 - Autores")
-    console.print("4 - Livros")
-    console.print("5 - Sair")
-    console.rule(align="center")    
+                                "continuar... ")     
 
 
 def menu_categorias() -> None:
-    pass
+    while True:
+        console.clear()
+        console.rule(title="Menu Categorias", align="center")
+        console.print("1 - Listar\n" +
+                    "2 - Cadastrar\n" +
+                    "3 - Excluir\n" + 
+                    "4 - Listar por Id\n" +
+                    "5 - Voltar")
+        console.rule(align="center")    
+        opcao = console.input("\nInforme a opção desejada: ")
+        match opcao:
+            case "1":
+                pass
+            case "2":
+                pass
+            case "3":
+                pass
+            case "4":
+                pass
+            case "5":
+                break
+            case _:
+                console.input("\n[red]Opção inválida. Pressione enter para " + 
+                                "continuar... ")
+
 
 
 def menu_editoras() -> None:
