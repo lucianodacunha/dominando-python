@@ -21,10 +21,18 @@ class Autor:
     def nome(self) -> str:
         return self._nome
     
+    @nome.setter
+    def nome(self, nome: str) -> None:
+        self._nome = nome
+
     @property
     def biografia(self) -> str:
         return self._biografia
 
+    @biografia.setter
+    def biografia(self, biografia: str) -> None:
+        self._biografia = biografia
+    
     @classmethod
     def get_id(cls):
         Autor.serial += 1
@@ -35,6 +43,7 @@ class Autor:
 
 
 autores: list[Autor] = list()
+
 
 def main() -> None:
   
@@ -132,8 +141,9 @@ def menu_autores() -> None:
         console.print("1 - Listar\n" +
                       "2 - Cadastrar\n" +
                       "3 - Excluir\n" + 
-                      "4 - Listar por Id\n" +
-                      "5 - Voltar")
+                      "4 - Editar\n" + 
+                      "5 - Listar por Id\n" +
+                      "6 - Voltar")
         console.rule(align="center")    
         opcao = console.input("\nInforme a opção desejada: ")
         match opcao:
@@ -142,10 +152,12 @@ def menu_autores() -> None:
             case "2":
                 cadastrar_autores()
             case "3":
-                pass
+                excluir_autores()
             case "4":
-                pass
+                editar_autor()            
             case "5":
+                listar_autor_por_id()
+            case "6":
                 break
             case _:
                 console.input("\n[red]Opção inválida. Pressione enter para " + 
@@ -155,12 +167,63 @@ def menu_autores() -> None:
 def listar_autores() -> None:
         console.clear()
         console.rule(title="Listagem de Autores", align="center")
+        if autores:
+            console.print(f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}")
+            for autor in autores:
+                console.print(f"{str(autor.id).rjust(2)}" + 
+                            f" | {autor.nome.ljust(30)}")
+        else:
+            console.print("[red]Nenhum autor cadastrado.")
+        console.rule(align="center")    
+        console.input("\nPressione enter para continuar...")
+
+
+def excluir_autores() -> None:
+    console.clear()
+    console.rule(title="Listagem de Autores", align="center")
+    if autores:
         console.print(f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}")
         for autor in autores:
             console.print(f"{str(autor.id).rjust(2)}" + 
-                          f" | {autor.nome.ljust(30)}")
-        console.rule(align="center")    
-        console.input("\nPressione enter para continuar...")
+                        f" | {autor.nome.ljust(30)}")
+    else:
+        console.print("[red]Nenhum autor cadastrado.")
+    console.rule(align="center") 
+
+    id = int(console.input("Entre com o id do autores para excluir: "))
+    for idx, autor in enumerate(autores):
+        if autor.id == id:
+            break
+    autor = autores.pop(idx)
+    console.input(f"\nAutor {autor.nome} removido com sucesso." + \
+                  f"\nPresione enter para continuar...")
+
+
+def listar_autor_por_id() -> None:
+    console.clear()
+    console.rule(title="Listagem de Autores", align="center")
+    if autores:
+        console.print(f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}")
+        for autor in autores:
+            console.print(f"{str(autor.id).rjust(2)}" + 
+                        f" | {autor.nome.ljust(30)}")
+    else:
+        console.print("[red]Nenhum autor cadastrado.")
+    console.rule(align="center")     
+
+    id = int(console.input("Entre com o id do autores para excluir: "))
+    for idx, autor in enumerate(autores):
+        if autor.id == id:
+            break
+
+    autor = autores[idx]
+    console.clear()
+    console.rule(title="Listagem de Autores", align="center")
+    console.print(f"Id: {autor.id}\n" + \
+                  f"Nome: {autor.nome}\n" + \
+                  f"Biografia: {autor.biografia}")
+    console.rule(align="center")
+    console.input("\nPressione enter para continuar...")
 
 
 def cadastrar_autores() -> None:
@@ -173,6 +236,36 @@ def cadastrar_autores() -> None:
         console.rule(align="center")    
         console.input("\nAutor cadastrado com sucesso. "
                       "Pressione enter para continuar...")
+
+
+def editar_autor() -> None:
+    console.clear()
+    console.rule(title="Listagem de Autores", align="center")
+    if autores:
+        console.print(f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}")
+        for autor in autores:
+            console.print(f"{str(autor.id).rjust(2)}" + 
+                        f" | {autor.nome.ljust(30)}")
+    else:
+        console.print("[red]Nenhum autor cadastrado.")
+    console.rule(align="center")     
+
+    id = int(console.input("Entre com o id do autores para excluir: "))
+    for idx, autor in enumerate(autores):
+        if autor.id == id:
+            break
+
+    autor = autores[idx]
+    console.clear()
+    console.rule(title="Listagem de Autores", align="center")
+    nome = console.input("\nInforme o nome do autor: ")
+    bio = console.input("Informe a biografia do autor: ")
+    autor.nome = nome
+    autor.biografia = bio    
+    console.rule(align="center")
+    console.input(f"\nAutor {autor.nome} editado com sucesso. " + \
+                  f"\nPressione enter para continuar...")
+    
 
 def menu_livros() -> None:
     while True:
