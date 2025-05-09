@@ -80,6 +80,7 @@ def menu_principal() -> None:
                                 "continuar... ")     
 
 
+#====Categoria====#
 def menu_categorias() -> None:
     while True:
         console.clear()
@@ -107,6 +108,7 @@ def menu_categorias() -> None:
                                 "continuar... ")
 
 
+#====Editora====#
 def menu_editoras() -> None:
     while True:
         console.clear()
@@ -134,6 +136,7 @@ def menu_editoras() -> None:
                                 "continuar... ")
 
 
+#====Autor====#
 def menu_autores() -> None:
     while True:
         console.clear()
@@ -267,6 +270,7 @@ def editar_autor() -> None:
                   f"\nPressione enter para continuar...")
     
 
+#====Livro====#
 def menu_livros() -> None:
     while True:
         console.clear()
