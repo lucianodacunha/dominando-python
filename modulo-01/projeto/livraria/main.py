@@ -1,5 +1,4 @@
 from rich.console import Console
-
 from view.view_principal import menu_principal
 
 console = Console()

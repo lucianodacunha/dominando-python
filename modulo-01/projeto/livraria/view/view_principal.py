@@ -1,6 +1,5 @@
 from rich.console import Console
 
-from model.model_autor import Autor
 from model.model_categoria import Categoria
 from model.model_editora import Editora
 from model.model_livro import Livro
@@ -16,7 +15,6 @@ console = Console()
 def menu_principal() -> None:
 
     editoras: list[Editora] = list()
-    autores: list[Autor] = list()
     livros: list[Livro] = list()
     categorias: list[Categoria] = list()
 
@@ -35,7 +33,7 @@ def menu_principal() -> None:
         opcao = console.input("\nInforme a opção desejada: ")
         match opcao:
             case "1":
-                view_autores.menu_autores(autores)
+                view_autores.menu()
             case "2":
                 view_categorias.menu_categorias(categorias)
             case "3":
