@@ -1,37 +1,7 @@
 from rich.console import Console
-from models.model import Livro
+from model.model_livro import Livro
 
 console = Console()
-
-
-def menu_livros(livros: list[Livro]) -> None:
-    while True:
-        console.clear()
-        console.rule(title="Menu Livros", align="center")
-        console.print(
-            "1 - Listar\n"
-            + "2 - Cadastrar\n"
-            + "3 - Excluir\n"
-            + "4 - Listar por Id\n"
-            + "5 - Voltar"
-        )
-        console.rule(align="center")
-        opcao = console.input("\nInforme a opção desejada: ")
-        match opcao:
-            case "1":
-                listar_livros(livros)
-            case "2":
-                cadastrar_livros(livros)
-            case "3":
-                excluir_livro(livros)
-            case "4":
-                listar_livro_por_id(livros)
-            case "5":
-                break
-            case _:
-                console.input(
-                    "\n[red]Opção inválida. Pressione enter para " + "continuar... "
-                )
 
 
 def listar_livros(livros: list[Livro]) -> None:

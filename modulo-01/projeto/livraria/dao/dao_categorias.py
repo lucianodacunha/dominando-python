@@ -1,37 +1,7 @@
 from rich.console import Console
-from models.model import Categoria
+from model.model_categoria import Categoria
 
 console = Console()
-
-
-def menu_categorias(categorias: list[Categoria]) -> None:
-    while True:
-        console.clear()
-        console.rule(title="Menu Categorias", align="center")
-        console.print(
-            "1 - Listar\n"
-            + "2 - Cadastrar\n"
-            + "3 - Excluir\n"
-            + "4 - Listar por Id\n"
-            + "5 - Voltar"
-        )
-        console.rule(align="center")
-        opcao = console.input("\nInforme a opção desejada: ")
-        match opcao:
-            case "1":
-                listar_categorias(categorias)
-            case "2":
-                cadastrar_categorias(categorias)
-            case "3":
-                excluir_categorias(categorias)
-            case "4":
-                listar_categoria_por_id(categorias)
-            case "5":
-                break
-            case _:
-                console.input(
-                    "\n[red]Opção inválida. Pressione enter para " + "continuar... "
-                )
 
 
 def listar_categorias(categorias: list[Categoria]) -> None:
