@@ -1,37 +1,35 @@
 from model.model_autor import Autor
+from exception.exceptions import RegistroNaoEncontradoException
 
-autores: list[Autor] = list()
+autores: dict[int, Autor] = dict()
 
 
-def listar() -> list[Autor]:
+def listar() -> dict[int, Autor]:
+    if not autores:
+        raise RegistroNaoEncontradoException("Nenhum autor cadastrado")
     return autores
 
 
 def excluir(id: int) -> Autor:
-    for idx, autor in enumerate(autores):
-        if autor.id == id:
-            break
-    return autores.pop(idx)
+    if autores.get(id, 0):
+        return autores.pop(id, 0)
+    else:
+        raise RegistroNaoEncontradoException("Registro não encontrado")
 
 
 def listar_por_id(id: int) -> Autor:
-    for idx, autor in enumerate(autores):
-        if autor.id == id:
-            break
-
-    return autores[idx]
+    if autores.get(id, 0):
+        return autores.get(id)
+    else:
+        raise RegistroNaoEncontradoException("Registro não encontrado")
 
 
 def cadastrar(autor: Autor) -> None:
-    autores.append(autor)
+    autores[autor.id] = autor
 
 
-def editar(id: int, autor: Autor) -> Autor:
-    for idx, _autor in enumerate(autores):
-        if _autor.id == id:
-            break
-
-    _autor = autores[idx]
-    _autor.nome = autor.nome
-    _autor.biografia = autor.biografia
-    return _autor
+def editar(id: int, nome: str, bio: str) -> Autor:
+    autor = listar_por_id(id)
+    autor.nome = nome
+    autor.biografia = bio
+    return autor

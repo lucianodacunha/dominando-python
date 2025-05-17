@@ -1,7 +1,7 @@
 from rich.console import Console
 from dao import dao_autores
 from model.model_autor import Autor
-
+from exception.exceptions import RegistroNaoEncontradoException
 
 console = Console()
 
@@ -41,16 +41,15 @@ def menu() -> None:
 
 
 def listar() -> None:
-    autores = dao_autores.listar()
-
     console.clear()
     console.rule(title="Listagem de Autores", align="center")
-    if autores:
+    try:
+        autores = dao_autores.listar().values()
         console.print(f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}")
         for autor in autores:
             console.print(f"{str(autor.id).rjust(2)}" + f" | {autor.nome.ljust(30)}")
-    else:
-        console.print("[red]Nenhum autor cadastrado.")
+    except RegistroNaoEncontradoException as e:
+        console.print(f"[red]{e}")
     console.rule(align="center")
 
 
@@ -59,7 +58,7 @@ def cadastrar() -> None:
     console.rule(title="Cadastro de Autores", align="center")
     nome = console.input("\nInforme o nome do autor: ")
     bio = console.input("Informe a biografia do autor: ")
-    autor = Autor(nome=nome, biografia=bio)
+    autor = Autor(nome, bio)
 
     dao_autores.cadastrar(autor)
 
@@ -70,52 +69,67 @@ def cadastrar() -> None:
 
 
 def excluir() -> None:
-    message: str = ""
-    listar()
-    console.input("\nPressione enter para continuar...")
+    mensagem: str = ""
     try:
-        if dao_autores.listar():
-            id = int(console.input("Entre com o id do autor para excluir: "))
-            autor = dao_autores.excluir(id)
-            message += (
-                f"\nAutor {autor.nome} removido com sucesso."
-                + f"\nPresione enter para continuar..."
-            )
+        listar()
+        dao_autores.listar()
+        id = int(console.input("Entre com o id do autor para excluir: "))
+        autor = dao_autores.excluir(id)
+        mensagem += (
+            f"\nAutor {autor.nome} removido com sucesso."
+            + f"\nPresione enter para continuar..."
+        )
     except ValueError as e:
-        message = f"Valor inserido incorreto\n{e} \nPresione enter para continuar..."
+        mensagem = f"\nValor inválido \nPressione enter para continuar..."
+    except RegistroNaoEncontradoException as e:
+        mensagem = f"\n{e} \nPressione enter para continuar..."
     finally:
-        console.print(message)
+        console.input(f"[red]{mensagem}")
 
 
 def listar_por_id() -> None:
+    mensagem: str = ""
     listar()
-
-    id = int(console.input("Entre com o id do autores para listar: "))
-    autor = dao_autores.listar_por_id(id)
-    console.clear()
-    console.rule(title="Listagem de Autores", align="center")
-    console.print(
-        f"Id: {autor.id}\n" + f"Nome: {autor.nome}\n" + f"Biografia: {autor.biografia}"
-    )
-    console.rule(align="center")
-    console.input("\nPressione enter para continuar...")
+    try:
+        dao_autores.listar()
+        id = int(console.input("Entre com o id do autor para listar: "))
+        autor = dao_autores.listar_por_id(id)
+        console.clear()
+        console.rule(title="Listagem de Autores", align="center")
+        console.print(
+            f"Id: {autor.id}\n"
+            + f"Nome: {autor.nome}\n"
+            + f"Biografia: {autor.biografia}"
+        )
+        console.rule(align="center")
+        mensagem += f"\nPressione enter para continuar..."
+    except ValueError as e:
+        mensagem = f"\nValor inválido \nPressione enter para continuar..."
+    except RegistroNaoEncontradoException as e:
+        mensagem += f"\n{e}\nPressione enter para continuar..."
+    finally:
+        console.input(f"[red]{mensagem} ")
 
 
 def editar() -> None:
+    mensagem: str = ""
     listar()
+    try:
+        dao_autores.listar()
+        id = int(console.input("Entre com o id do autor para editar: "))
+        autor = dao_autores.listar_por_id(id)
+        console.clear()
+        console.rule(title="Listagem de Autores", align="center")
+        nome = console.input("\nInforme o nome do autor: ")
+        bio = console.input("Informe a biografia do autor: ")
 
-    id = int(console.input("Entre com o id do autores para editar: "))
+        autor = dao_autores.editar(id, nome, bio)
 
-    console.clear()
-    console.rule(title="Listagem de Autores", align="center")
-    nome = console.input("\nInforme o nome do autor: ")
-    bio = console.input("Informe a biografia do autor: ")
-    autor = Autor(nome, bio)
-
-    _autor = dao_autores.editar(id, autor)
-
-    console.rule(align="center")
-    console.input(
-        f"\nAutor {_autor.nome} editado com sucesso. "
-        + f"\nPressione enter para continuar..."
-    )
+        console.rule(align="center")
+        mensagem += f"\nAutor {autor.nome} editado com sucesso. "
+    except ValueError as e:
+        mensagem = f"\nValor inválido \nPressione enter para continuar..."
+    except RegistroNaoEncontradoException as e:
+        mensagem += f"\n{e}\nPressione enter para continuar..."
+    finally:
+        console.input(f"{mensagem}")

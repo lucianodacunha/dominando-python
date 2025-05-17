@@ -32,4 +32,4 @@ class Autor:
         return Autor.serial
 
     def __str__(self) -> str:
-        return f"{str(id).zfill(2)} - {self.nome}"
+        return f"{str(self.id).zfill(2)} - {self.nome}"
