@@ -1,12 +1,12 @@
 from rich.console import Console
-from view.view_principal import menu_principal
+from view.view_principal import menu
 
 console = Console()
 
 
 def main() -> None:
 
-    menu_principal()
+    menu()
     console.input("\n[red]Pressione enter para finalizar...")
     console.clear()
 

@@ -1,5 +1,4 @@
 from rich.console import Console
-
 from dao import dao_autores
 from model.model_autor import Autor
 
@@ -42,7 +41,7 @@ def menu() -> None:
 
 
 def listar() -> None:
-    autores = dao_autores.listar_autores()
+    autores = dao_autores.listar()
 
     console.clear()
     console.rule(title="Listagem de Autores", align="center")
@@ -62,7 +61,7 @@ def cadastrar() -> None:
     bio = console.input("Informe a biografia do autor: ")
     autor = Autor(nome=nome, biografia=bio)
 
-    dao_autores.cadastrar_autores(autor)
+    dao_autores.cadastrar(autor)
 
     console.rule(align="center")
     console.input(
@@ -71,20 +70,8 @@ def cadastrar() -> None:
 
 
 def excluir() -> None:
-    console.clear()
-    console.rule(title="Listagem de Autores", align="center")
-
-    autores = dao_autores.listar_autores()
-
-    if autores:
-        console.print(f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}")
-        for autor in autores:
-            console.print(f"{str(autor.id).rjust(2)}" + f" | {autor.nome.ljust(30)}")
-    else:
-        console.print("[red]Nenhum autor cadastrado.")
-    console.rule(align="center")
-
-    id = int(console.input("Entre com o id do autores para excluir: "))
+    listar()
+    id = int(console.input("Entre com o id do autor para excluir: "))
     # TODO: Implementar dict para facilitar a pesquisa por chave.
 
     autor = dao_autores.excluir(id)
@@ -95,19 +82,10 @@ def excluir() -> None:
 
 
 def listar_por_id() -> None:
-    console.clear()
-    console.rule(title="Listagem de Autores", align="center")
-    autores = dao_autores.listar_autores()
-    if autores:
-        console.print(f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}")
-        for autor in autores:
-            console.print(f"{str(autor.id).rjust(2)}" + f" | {autor.nome.ljust(30)}")
-    else:
-        console.print("[red]Nenhum autor cadastrado.")
-    console.rule(align="center")
+    listar()
 
-    id = int(console.input("Entre com o id do autores para excluir: "))
-    autor = dao_autores.listar_autor_por_id(id)
+    id = int(console.input("Entre com o id do autores para listar: "))
+    autor = dao_autores.listar_por_id(id)
     console.clear()
     console.rule(title="Listagem de Autores", align="center")
     console.print(
@@ -120,7 +98,7 @@ def listar_por_id() -> None:
 def editar() -> None:
     listar()
 
-    id = int(console.input("Entre com o id do autores para excluir: "))
+    id = int(console.input("Entre com o id do autores para editar: "))
 
     console.clear()
     console.rule(title="Listagem de Autores", align="center")
@@ -128,7 +106,7 @@ def editar() -> None:
     bio = console.input("Informe a biografia do autor: ")
     autor = Autor(nome, bio)
 
-    _autor = dao_autores.editar_autor(id, autor)
+    _autor = dao_autores.editar(id, autor)
 
     console.rule(align="center")
     console.input(

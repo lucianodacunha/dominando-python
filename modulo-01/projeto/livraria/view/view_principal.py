@@ -1,8 +1,4 @@
 from rich.console import Console
-
-from model.model_categoria import Categoria
-from model.model_editora import Editora
-from model.model_livro import Livro
 from view import view_autores
 from view import view_categorias
 from view import view_editoras
@@ -12,19 +8,15 @@ from view import view_livros
 console = Console()
 
 
-def menu_principal() -> None:
-
-    editoras: list[Editora] = list()
-    livros: list[Livro] = list()
-    categorias: list[Categoria] = list()
+def menu() -> None:
 
     while True:
         console.clear()
         console.rule(title="Menu Principal", align="center")
         console.print(
-            "1 - Categorias\n"
-            + "2 - Editoras\n"
-            + "3 - Autores\n"
+            "1 - Autores\n"
+            + "2 - Categorias\n"
+            + "3 - Editoras\n"
             + "4 - Livros\n"
             + "5 - Sair"
         )
@@ -35,11 +27,11 @@ def menu_principal() -> None:
             case "1":
                 view_autores.menu()
             case "2":
-                view_categorias.menu_categorias(categorias)
+                view_categorias.menu()
             case "3":
-                view_editoras.menu_editoras(editoras)
+                view_editoras.menu()
             case "4":
-                view_livros.menu_livros(livros)
+                view_livros.menu()
             case "5":
                 break
             case _:
