@@ -11,28 +11,28 @@ def menu() -> None:
         console.clear()
         console.rule(title="Menu Autores", align="center")
         console.print(
-            "1 - Listar\n"
-            + "2 - Cadastrar\n"
-            + "3 - Excluir\n"
+            "1 - Cadastrar\n"
+            + "2 - Listar\n"
+            + "3 - Listar por Id\n"
             + "4 - Editar\n"
-            + "5 - Listar por Id\n"
-            + "6 - Voltar"
+            + "5 - Excluir\n"
+            + "0 - Voltar"
         )
         console.rule(align="center")
         opcao = console.input("\nInforme a opção desejada: ")
         match opcao:
             case "1":
+                cadastrar()
+            case "2":
                 listar()
                 console.input("\nPressione enter para continuar...")
-            case "2":
-                cadastrar()
             case "3":
-                excluir()
+                listar_por_id()
             case "4":
                 editar()
             case "5":
-                listar_por_id()
-            case "6":
+                excluir()
+            case "0":
                 break
             case _:
                 console.input(
@@ -70,15 +70,21 @@ def cadastrar() -> None:
 
 
 def excluir() -> None:
+    message: str = ""
     listar()
-    id = int(console.input("Entre com o id do autor para excluir: "))
-    # TODO: Implementar dict para facilitar a pesquisa por chave.
-
-    autor = dao_autores.excluir(id)
-    console.input(
-        f"\nAutor {autor.nome} removido com sucesso."
-        + f"\nPresione enter para continuar..."
-    )
+    console.input("\nPressione enter para continuar...")
+    try:
+        if dao_autores.listar():
+            id = int(console.input("Entre com o id do autor para excluir: "))
+            autor = dao_autores.excluir(id)
+            message += (
+                f"\nAutor {autor.nome} removido com sucesso."
+                + f"\nPresione enter para continuar..."
+            )
+    except ValueError as e:
+        message = f"Valor inserido incorreto\n{e} \nPresione enter para continuar..."
+    finally:
+        console.print(message)
 
 
 def listar_por_id() -> None:

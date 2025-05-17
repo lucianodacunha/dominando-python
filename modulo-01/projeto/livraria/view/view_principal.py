@@ -18,7 +18,7 @@ def menu() -> None:
             + "2 - Categorias\n"
             + "3 - Editoras\n"
             + "4 - Livros\n"
-            + "5 - Sair"
+            + "0 - Sair"
         )
         console.rule(align="center")
 
@@ -32,7 +32,7 @@ def menu() -> None:
                 view_editoras.menu()
             case "4":
                 view_livros.menu()
-            case "5":
+            case "0":
                 break
             case _:
                 console.input(

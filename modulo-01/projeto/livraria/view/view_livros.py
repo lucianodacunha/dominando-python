@@ -11,25 +11,28 @@ def menu() -> None:
         console.clear()
         console.rule(title="Menu Livros", align="center")
         console.print(
-            "1 - Listar\n"
-            + "2 - Cadastrar\n"
-            + "3 - Excluir\n"
-            + "4 - Listar por Id\n"
-            + "5 - Voltar"
+            "1 - Cadastrar\n"
+            + "2 - Listar\n"
+            + "3 - Listar por Id\n"
+            + "4 - Editar\n"
+            + "5 - Excluir\n"
+            + "0 - Voltar"
         )
         console.rule(align="center")
         opcao = console.input("\nInforme a opção desejada: ")
         match opcao:
             case "1":
-                dao_livros.listar()
-                console.input("\nPressione enter para continuar...")
+                cadastrar()
             case "2":
-                dao_livros.cadastrar()
+                listar()
+                console.input("\nPressione enter para continuar...")
             case "3":
-                dao_livros.excluir()
+                listar_por_id()
             case "4":
-                dao_livros.listar_por_id()
+                editar()
             case "5":
+                excluir()
+            case "0":
                 break
             case _:
                 console.input(
@@ -68,7 +71,7 @@ def cadastrar() -> None:
     )
 
 
-def excluir_livro() -> None:
+def excluir() -> None:
     listar()
 
     id = int(console.input("Entre com o id do livros para excluir: "))
@@ -100,7 +103,7 @@ def listar_por_id() -> None:
     console.input("\nPressione enter para continuar...")
 
 
-def editar_livro() -> None:
+def editar() -> None:
     livros = dao_livros.listar()
     console.clear()
     console.rule(title="Listagem de Livro", align="center")

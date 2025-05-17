@@ -10,25 +10,28 @@ def menu() -> None:
         console.clear()
         console.rule(title="Menu Categorias", align="center")
         console.print(
-            "1 - Listar\n"
-            + "2 - Cadastrar\n"
-            + "3 - Excluir\n"
-            + "4 - Listar por Id\n"
-            + "5 - Voltar"
+            "1 - Cadastrar\n"
+            + "2 - Listar\n"
+            + "3 - Listar por Id\n"
+            + "4 - Editar\n"
+            + "5 - Excluir\n"
+            + "0 - Voltar"
         )
         console.rule(align="center")
         opcao = console.input("\nInforme a opção desejada: ")
         match opcao:
             case "1":
+                cadastrar()
+            case "2":
                 listar()
                 console.input("\nPressione enter para continuar...")
-            case "2":
-                cadastrar()
             case "3":
-                excluir()
+                listar_por_id()
             case "4":
-                listar()
+                editar()
             case "5":
+                excluir()
+            case "0":
                 break
             case _:
                 console.input(
@@ -62,7 +65,11 @@ def excluir() -> None:
     )
 
 
-def listar_categoria_por_id() -> None:
+def editar():
+    console.print("\nNão implementado")
+
+
+def listar_por_id() -> None:
     listar()
 
     id = int(console.input("Entre com o id da categoria para excluir: "))

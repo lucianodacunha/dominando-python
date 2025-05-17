@@ -7,7 +7,7 @@ console = Console()
 def main() -> None:
 
     menu()
-    console.input("\n[red]Pressione enter para finalizar...")
+    console.input("\n[bold red]Pressione enter para finalizar...")
     console.clear()
 
 
