@@ -1,6 +1,7 @@
 from rich.console import Console
 from dao import dao_categorias
 from model.model_categoria import Categoria
+from exception.exceptions import RegistroNaoEncontradoException
 
 console = Console()
 
@@ -40,18 +41,22 @@ def menu() -> None:
 
 
 def listar() -> None:
-    categorias = dao_categorias.listar()
+    mensagem = ""
     console.clear()
     console.rule(title="Listagem de categorias", align="center")
-    if categorias:
+    try:
+        categorias = dao_categorias.listar()
         console.print(f"{'Id'.rjust(2)} | {'Nome da categoria'.ljust(30)}")
         for categoria in categorias:
             console.print(
                 f"{str(categoria.id).rjust(2)}" + f" | {categoria.nome.ljust(30)}"
             )
-    else:
-        console.print("[red]Nenhuma categoria cadastrada.")
-    console.rule(align="center")
+
+    except RegistroNaoEncontradoException as e:
+        mensagem += f"[red]Nenhuma categoria cadastrada."
+    finally:
+        console.print("{mensagem}")
+        console.rule(align="center")
 
 
 def excluir() -> None:
@@ -66,21 +71,48 @@ def excluir() -> None:
 
 
 def editar():
-    console.print("\nNão implementado")
+    mensagem = ""
+    try:
+        listar()
+        dao_categorias.listar()
+        id = int(console.input("Informe o id da categoria para editar"))
+        dao_categorias.listar_por_id(id)
+        console.clear()
+        console.rule(title="Listagem de Categorias", align="center")
+        nome = console.input("\nInforme o nome dda categoria: ")
+
+        categoria = dao_categorias.editar(id, nome)
+
+        console.rule(align="center")
+        mensagem += f"\nCategoria {categoria.nome} editada com sucesso. "
+
+    except ValueError as e:
+        mensagem += "\nValue inválido. Pressione enter para continuar..."
+    except RegistroNaoEncontradoException as e:
+        mensagem += "\n{e}"
+    finally:
+        console.print(f"{mensagem}")
 
 
 def listar_por_id() -> None:
-    listar()
+    try:
+        listar()
 
-    id = int(console.input("Entre com o id da categoria para excluir: "))
+        id = int(console.input("Entre com o id da categoria para excluir: "))
 
-    categoria = dao_categorias.listar_por_id(id)
+        categoria = dao_categorias.listar_por_id(id)
 
-    console.clear()
-    console.rule(title="Listagem de categoriaes", align="center")
-    console.print(f"Id: {categoria.id}\n" + f"Nome: {categoria.nome}")
-    console.rule(align="center")
-    console.input("\nPressione enter para continuar...")
+        console.clear()
+        console.rule(title="Listagem de categoriaes", align="center")
+        console.print(f"Id: {categoria.id}\n" + f"Nome: {categoria.nome}")
+        console.rule(align="center")
+        console.input("\nPressione enter para continuar...")
+    except ValueError as e:
+        mensagem += "\nValue inválido. Pressione enter para continuar..."
+    except RegistroNaoEncontradoException as e:
+        mensagem += "\n{e}"
+    finally:
+        console.print(f"{mensagem}")
 
 
 def cadastrar() -> None:

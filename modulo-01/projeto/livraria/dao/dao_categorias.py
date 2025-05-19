@@ -1,44 +1,40 @@
 from rich.console import Console
 from model.model_categoria import Categoria
+from exception.exceptions import RegistroNaoEncontradoException
 
-console = Console()
-categorias: list[Categoria] = list()
-
-
-def listar() -> None:
-    return categorias
+categorias: dict[int, Categoria] = dict()
+sequence = 1
 
 
-def excluir(id: int) -> None:
-    for idx, categoria in enumerate(categorias):
-        if categoria.id == id:
-            break
-    return categorias.pop(idx)
+def listar() -> list[Categoria]:
+    if not categorias:
+        raise RegistroNaoEncontradoException("Nenhum registro encontrado")
+    return categorias.values()
 
 
-def listar_por_id(id: int) -> None:
+def excluir(id: int) -> Categoria:
+    if not categorias.get(id, 0):
+        raise RegistroNaoEncontradoException("Registro não encontrado")
+    return categorias.pop(id)
 
-    for idx, categoria in enumerate(categorias):
-        if categoria.id == id:
-            break
 
-    return categorias[idx]
+def listar_por_id(id: int) -> Categoria:
+    if not categorias.get(id, 0):
+        raise RegistroNaoEncontradoException("Registro não encontrado")
+    return categorias.get(id)
 
 
 def cadastrar(categoria: Categoria) -> None:
+    global sequence
+    categoria.id = sequence
     categorias.append(categoria)
+    sequence += 1
 
 
-def editar(id: int, categoria: Categoria) -> None:
-    for idx, _categoria in enumerate(categorias):
-        if _categoria.id == id:
-            break
+def editar(id: int, nome: str) -> None:
+    if not categorias.get(id, 0):
+        raise RegistroNaoEncontradoException("Registro não encontrado")
 
-    _categoria = categorias[idx]
-    _categoria.nome = categoria.nome
-
-    console.rule(align="center")
-    console.input(
-        f"\nCategoria {_categoria.nome} editado com sucesso. "
-        + f"\nPressione enter para continuar..."
-    )
+    categoria = categorias.get(id)
+    categoria.nome = categoria.nome
+    return categoria

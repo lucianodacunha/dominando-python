@@ -44,7 +44,7 @@ def listar() -> None:
     console.clear()
     console.rule(title="Listagem de Autores", align="center")
     try:
-        autores = dao_autores.listar().values()
+        autores = dao_autores.listar()
         console.print(f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}")
         for autor in autores:
             console.print(f"{str(autor.id).rjust(2)}" + f" | {autor.nome.ljust(30)}")
