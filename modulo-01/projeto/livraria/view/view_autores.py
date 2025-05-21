@@ -1,9 +1,10 @@
 from rich.console import Console
-from dao import dao_autores
+from dao.dao_autores import Autor_DAO
 from model.model_autor import Autor
 from exception.exceptions import RegistroNaoEncontradoException
 
 console = Console()
+dao_autores = Autor_DAO()
 
 
 def menu() -> None:

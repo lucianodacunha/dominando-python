@@ -1,32 +1,34 @@
 class Autor:
     def __init__(self, nome: str, biografia: str) -> None:
-        self._id = 0
-        self._nome = nome
-        self._biografia = biografia
+        self.__id = 0
+        self.__nome = nome
+        self.__biografia = biografia
 
     @property
     def id(self) -> int:
-        return self._id
+        return self.__id
 
     @id.setter
     def id(self, id) -> None:
-        self._id = id
+        """Método setter da propriedade id"""
+        self.__id = id
 
     @property
     def nome(self) -> str:
-        return self._nome
+        """Método getter da propriedade nome"""
+        return self.__nome
 
     @nome.setter
     def nome(self, nome: str) -> None:
-        self._nome = nome
+        self.__nome = nome
 
     @property
     def biografia(self) -> str:
-        return self._biografia
+        return self.__biografia
 
     @biografia.setter
     def biografia(self, biografia: str) -> None:
-        self._biografia = biografia
+        self.__biografia = biografia
 
     def __str__(self) -> str:
         return f"{str(self.id).zfill(2)} - {self.nome}"
