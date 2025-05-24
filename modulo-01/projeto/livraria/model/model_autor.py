@@ -1,8 +1,9 @@
 class Autor:
+    __slots__ = ("__id", "__nome", "__biografia")
+
     def __init__(self, nome: str, biografia: str) -> None:
-        self.__id = 0
-        self.__nome = nome
-        self.__biografia = biografia
+        self.nome = nome
+        self.biografia = biografia
 
     @property
     def id(self) -> int:

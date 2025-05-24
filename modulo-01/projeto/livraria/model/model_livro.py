@@ -2,7 +2,7 @@ class Livro:
     serial: int = 0
 
     def __init__(
-        self, titulo: str, resumo: str, ano: str, paginas: int, isbn: str
+        self, titulo: str, resumo: str, ano: int, paginas: int, isbn: str
     ) -> None:
         self._id = Livro.get_id()
         self._titulo = titulo
@@ -28,7 +28,7 @@ class Livro:
         return self._resumo
 
     @property
-    def ano(self) -> str:
+    def ano(self) -> int:
         return self._ano
 
     @property

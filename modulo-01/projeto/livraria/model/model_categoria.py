@@ -1,22 +1,24 @@
 class Categoria:
-    serial: int = 0
+    __slots__ = ("__id", "__nome")
 
     def __init__(self, nome: str):
-        self._id = Categoria.get_id()
-        self._nome = nome
+        self.nome = nome
 
     @property
     def id(self) -> int:
-        return self._id
+        return self.__id
+
+    @id.setter
+    def id(self, id) -> None:
+        self.__id = id
 
     @property
-    def nome(self) -> None:
-        return self._nome
+    def nome(self) -> str:
+        return self.__nome
 
-    @classmethod
-    def get_id(cls) -> int:
-        Categoria.serial += 1
-        return Categoria.serial
+    @nome.setter
+    def nome(self, nome) -> None:
+        self.__nome = nome
 
     def __str__(self) -> str:
         return f"Categoria: {self.nome}"

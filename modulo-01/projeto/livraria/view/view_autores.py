@@ -1,10 +1,10 @@
 from rich.console import Console
-from dao.dao_autores import Autor_DAO
-from model.model_autor import Autor
 from exception.exceptions import RegistroNaoEncontradoException
 
+from controller.controller_autor import AutorController
+
 console = Console()
-dao_autores = Autor_DAO()
+controller = AutorController()
 
 
 def menu() -> None:
@@ -23,14 +23,13 @@ def menu() -> None:
         opcao = console.input("\nInforme a opção desejada: ")
         match opcao:
             case "1":
-                cadastrar()
+                inserir()
             case "2":
                 listar()
-                console.input("\nPressione enter para continuar...")
             case "3":
                 listar_por_id()
             case "4":
-                editar()
+                atualizar()
             case "5":
                 excluir()
             case "0":
@@ -41,96 +40,149 @@ def menu() -> None:
                 )
 
 
-def listar() -> None:
-    console.clear()
-    console.rule(title="Listagem de Autores", align="center")
-    try:
-        autores = dao_autores.listar()
-        console.print(f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}")
-        for autor in autores:
-            console.print(f"{str(autor.id).rjust(2)}" + f" | {autor.nome.ljust(30)}")
-    except RegistroNaoEncontradoException as e:
-        console.print(f"[red]{e}")
-    console.rule(align="center")
+def inserir() -> None:
+    message: str = ""
 
-
-def cadastrar() -> None:
     console.clear()
     console.rule(title="Cadastro de Autores", align="center")
-    nome = console.input("\nInforme o nome do autor: ")
-    bio = console.input("Informe a biografia do autor: ")
-    autor = Autor(nome, bio)
-
-    dao_autores.cadastrar(autor)
-
+    nome = console.input("Informe o nome do autor: ")
+    biografia = console.input("Informe a biografia do autor: ")
+    autor_info = {"nome": nome, "biografia": biografia}
     console.rule(align="center")
-    console.input(
-        "\nAutor cadastrado com sucesso. " "Pressione enter para continuar..."
-    )
+
+    resposta = controller.inserir(autor_info)
+    if resposta["success"]:
+        message += f"\n[green]{resposta["message"]}."
+    else:
+        message += f"\n[red]Falha ao inserir autor "
+        message += f"\n{resposta["error"]}."
+
+    console.input(f"{message}\nPressione enter para continuar...")
+
+
+def listar() -> None:
+    message: str = ""
+    resposta = controller.listar()
+
+    console.clear()
+    console.rule(title="Listagem de Autores", align="center")
+
+    if resposta["success"]:
+        message += f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}"
+        for autor in resposta["message"]:
+            message += f"\n{str(autor.id).rjust(2)}" + f" | {autor.nome.ljust(30)}"
+    else:
+        message += f"[red]{resposta["error"]}"
+
+    console.print(f"{message}")
+    console.rule(align="center")
+    console.input(f"\nPressione enter para continuar...")
+
+
+def atualizar() -> None:
+    message: str = ""
+
+    console.clear()
+    console.rule(title="Listagem de Autores", align="center")
+
+    # listar
+    resposta = controller.listar()
+    if resposta["success"]:
+        message += f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}"
+        for autor in resposta["message"]:
+            message += f"\n{str(autor.id).rjust(2)}" + f" | {autor.nome.ljust(30)}"
+
+        console.print(f"{message}")
+        console.rule(align="center")
+
+        id = console.input("\nEntre com o id do autor para editar: ")
+        nome = console.input("Informe o nome do autor: ")
+        biografia = console.input("Informe a biografia do autor: ")
+        autor_info = {"id": id, "nome": nome, "biografia": biografia}
+
+        # atualizar
+        resposta = controller.atualizar(autor_info)
+        if resposta["success"]:
+            message = (
+                f"\n[green]Autor {resposta["message"].nome} atualizado com sucesso."
+            )
+        else:
+            message = f"[red]Erro: {resposta["error"]}."
+        console.input(f"{message}\nPressione enter para continuar.")
+    else:
+        message += f"[red]{resposta["error"]}"
+        console.print(f"{message}")
+        console.rule(align="center")
+        console.input(f"[red]\nPressione enter para continuar.")
 
 
 def excluir() -> None:
-    mensagem: str = ""
-    try:
-        listar()
-        dao_autores.listar()
-        id = int(console.input("Entre com o id do autor para excluir: "))
-        autor = dao_autores.excluir(id)
-        mensagem += (
-            f"\nAutor {autor.nome} removido com sucesso."
-            + f"\nPresione enter para continuar..."
-        )
-    except ValueError as e:
-        mensagem = f"\nValor inválido \nPressione enter para continuar..."
-    except RegistroNaoEncontradoException as e:
-        mensagem = f"\n{e} \nPressione enter para continuar..."
-    finally:
-        console.input(f"[red]{mensagem}")
+    message: str = ""
+
+    console.clear()
+    console.rule(title="Listagem de Autores", align="center")
+
+    # listar
+    resposta = controller.listar()
+    if resposta["success"]:
+        message += f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}"
+        for autor in resposta["message"]:
+            message += f"\n{str(autor.id).rjust(2)}" + f" | {autor.nome.ljust(30)}"
+
+        console.print(f"{message}")
+        console.rule(align="center")
+
+        id = console.input("\nEntre com o id do autor para excluir: ")
+        autor_info = {"id": id}
+
+        # atualizar
+        resposta = controller.excluir(autor_info)
+        if resposta["success"]:
+            message = f"\n[green]Autor {resposta["message"].nome} excluído com sucesso."
+        else:
+            message = f"[red]Erro: {resposta["error"]}."
+        console.input(f"{message}\nPressione enter para continuar.")
+    else:
+        message += f"[red]{resposta["error"]}"
+        console.print(f"{message}")
+        console.rule(align="center")
+        console.input(f"[red]\nPressione enter para continuar.")
 
 
 def listar_por_id() -> None:
-    mensagem: str = ""
-    listar()
-    try:
-        dao_autores.listar()
-        id = int(console.input("Entre com o id do autor para listar: "))
-        autor = dao_autores.listar_por_id(id)
+    message: str = ""
+
+    console.clear()
+    console.rule(title="Listagem de Autores", align="center")
+
+    # listar
+    resposta = controller.listar()
+    if resposta["success"]:
+        message += f"{'Id'.rjust(2)} | {'Nome do Autor'.ljust(30)}"
+        for autor in resposta["message"]:
+            message += f"\n{str(autor.id).rjust(2)}" + f" | {autor.nome.ljust(30)}"
+
+        console.print(f"{message}")
+        console.rule(align="center")
+
+        id = console.input("\nEntre com o id do autor para listar: ")
+        autor_info = {"id": id}
+
+        # atualizar
+        resposta = controller.buscar_por_id(autor_info)
+        if resposta["success"]:
+            message = f"Id: {resposta["message"].id}\n"
+            message += f"Nome: {resposta["message"].nome}\n"
+            message += f"Biografia: {resposta["message"].biografia}"
+        else:
+            message = f"[red]Erro: {resposta["error"]}."
+
         console.clear()
         console.rule(title="Listagem de Autores", align="center")
-        console.print(
-            f"Id: {autor.id}\n"
-            + f"Nome: {autor.nome}\n"
-            + f"Biografia: {autor.biografia}"
-        )
+        console.print(f"{message}")
         console.rule(align="center")
-        mensagem += f"\nPressione enter para continuar..."
-    except ValueError as e:
-        mensagem = f"\nValor inválido \nPressione enter para continuar..."
-    except RegistroNaoEncontradoException as e:
-        mensagem += f"\n{e}\nPressione enter para continuar..."
-    finally:
-        console.input(f"[red]{mensagem} ")
-
-
-def editar() -> None:
-    mensagem: str = ""
-    listar()
-    try:
-        dao_autores.listar()
-        id = int(console.input("Entre com o id do autor para editar: "))
-        autor = dao_autores.listar_por_id(id)
-        console.clear()
-        console.rule(title="Listagem de Autores", align="center")
-        nome = console.input("\nInforme o nome do autor: ")
-        bio = console.input("Informe a biografia do autor: ")
-
-        autor = dao_autores.editar(id, nome, bio)
-
+    else:
+        message += f"[red]{resposta["error"]}"
+        console.print(f"{message}")
         console.rule(align="center")
-        mensagem += f"\nAutor {autor.nome} editado com sucesso. "
-    except ValueError as e:
-        mensagem = f"\nValor inválido \nPressione enter para continuar..."
-    except RegistroNaoEncontradoException as e:
-        mensagem += f"\n{e}\nPressione enter para continuar..."
-    finally:
-        console.input(f"{mensagem}")
+    console.input(f"\nPressione enter para continuar.")

@@ -1,9 +1,10 @@
 from rich.console import Console
-from dao import dao_categorias
+from dao.dao_categorias import CategoriaDAO
 from model.model_categoria import Categoria
 from exception.exceptions import RegistroNaoEncontradoException
 
 console = Console()
+dao_categorias = CategoriaDAO()
 
 
 def menu() -> None:
@@ -55,7 +56,7 @@ def listar() -> None:
     except RegistroNaoEncontradoException as e:
         mensagem += f"[red]Nenhuma categoria cadastrada."
     finally:
-        console.print("{mensagem}")
+        console.print(f"{mensagem}")
         console.rule(align="center")
 
 
