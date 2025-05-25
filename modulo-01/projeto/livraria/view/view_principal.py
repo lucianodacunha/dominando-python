@@ -1,8 +1,8 @@
 from rich.console import Console
-from view import view_autores
-from view import view_categorias
-from view import view_editoras
-from view import view_livros
+from view import view_autor
+from view import view_categoria
+from view import view_editora
+from view import view_livro
 
 
 console = Console()
@@ -25,13 +25,13 @@ def menu() -> None:
         opcao = console.input("\nInforme a opção desejada: ")
         match opcao:
             case "1":
-                view_autores.menu()
+                view_autor.menu()
             case "2":
-                view_categorias.menu()
+                view_categoria.menu()
             case "3":
-                view_editoras.menu()
+                view_editora.menu()
             case "4":
-                view_livros.menu()
+                view_livro.menu()
             case "0":
                 break
             case _:

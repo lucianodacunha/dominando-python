@@ -7,10 +7,20 @@ class CategoriaDAO:
         self.__categorias: dict[int, Categoria] = dict()
         self.__sequence = 1
 
+    def inserir(self, categoria: Categoria) -> None:
+        categoria.id = self.__sequence
+        self.__categorias[categoria.id] = categoria
+        self.__sequence += 1
+
     def listar(self) -> list[Categoria]:
         if not self.__categorias:
             raise RegistroNaoEncontradoException("Nenhum registro encontrado")
         return self.__categorias.values()
+
+    def atualizar(self, id: int, nome: str) -> Categoria:
+        categoria = self.buscar_por_id(id)
+        categoria.nome = nome
+        return categoria
 
     def excluir(self, id: int) -> Categoria:
         if not self.__categorias.get(id, 0):
@@ -21,13 +31,3 @@ class CategoriaDAO:
         if not self.__categorias.get(id, 0):
             raise RegistroNaoEncontradoException("Registro não encontrado")
         return self.__categorias.get(id)
-
-    def cadastrar(self, categoria: Categoria) -> None:
-        categoria.id = self.__sequence
-        self.__categorias[categoria.id] = categoria
-        self.__sequence += 1
-
-    def editar(self, id: int, nome: str) -> Categoria:
-        categoria = self.buscar_por_id(id)
-        categoria.nome = nome
-        return categoria

@@ -1,52 +1,62 @@
 class Livro:
-    serial: int = 0
+    __slot__ = ("__titulo", "__resumo", "__ano", "__paginas", "__isbn")
 
     def __init__(
         self, titulo: str, resumo: str, ano: int, paginas: int, isbn: str
     ) -> None:
-        self._id = Livro.get_id()
-        self._titulo = titulo
-        self._resumo = resumo
-        self._ano = ano
-        self._paginas = paginas
-        self._isbn = isbn
+        self.__titulo = titulo
+        self.__resumo = resumo
+        self.__ano = ano
+        self.__paginas = paginas
+        self.__isbn = isbn
 
     @property
     def id(self) -> int:
-        return self._id
+        return self.__id
+
+    @id.setter
+    def id(self, id: int) -> None:
+        self.__id = id
 
     @property
     def titulo(self) -> str:
-        return self._titulo
+        return self.__titulo
 
     @titulo.setter
     def titulo(self, titulo: str) -> None:
-        self._titulo = titulo
+        self.__titulo = titulo
 
     @property
     def resumo(self) -> str:
-        return self._resumo
-
-    @property
-    def ano(self) -> int:
-        return self._ano
-
-    @property
-    def paginas(self) -> str:
-        return self._paginas
-
-    @property
-    def isbn(self) -> str:
-        return self._isbn
+        return self.__resumo
 
     @resumo.setter
     def resumo(self, resumo: str) -> None:
-        self._resumo = resumo
+        self.__resumo = resumo
 
-    @classmethod
-    def get_id(cls):
-        Livro.serial += 1
-        return Livro.serial
+    @property
+    def ano(self) -> int:
+        return self.__ano
+
+    @ano.setter
+    def ano(self, ano: int):
+        self.__ano = ano
+
+    @property
+    def paginas(self) -> str:
+        return self.__paginas
+
+    @paginas.setter
+    def paginas(self, paginas: int) -> None:
+        self.__paginas = paginas
+
+    @property
+    def isbn(self) -> str:
+        return self.__isbn
+
+    @isbn.setter
+    def isbn(self, isbn: str) -> None:
+        self.__isbn = isbn
 
     def __str__(self) -> str:
         return f"{str(id).zfill(2)} - {self.titulo}"

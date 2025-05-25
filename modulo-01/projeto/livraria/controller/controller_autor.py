@@ -1,5 +1,5 @@
 from model.model_autor import Autor
-from dao.dao_autores import AutorDAO
+from dao.dao_autor import AutorDAO
 from util.validators import validator
 
 
@@ -32,7 +32,6 @@ class AutorController:
             id = int(autor_info["id"])
             nome = autor_info["nome"]
             biografia = autor_info["biografia"]
-            autor = Autor(nome, biografia)
             autor = self.dao.atualizar(id, nome, biografia)
             return {"success": True, "message": autor}
         except Exception as e:

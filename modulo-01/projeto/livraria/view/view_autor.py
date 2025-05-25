@@ -1,6 +1,4 @@
 from rich.console import Console
-from exception.exceptions import RegistroNaoEncontradoException
-
 from controller.controller_autor import AutorController
 
 console = Console()
@@ -15,7 +13,7 @@ def menu() -> None:
             "1 - Cadastrar\n"
             + "2 - Listar\n"
             + "3 - Listar por Id\n"
-            + "4 - Editar\n"
+            + "4 - Atualizar\n"
             + "5 - Excluir\n"
             + "0 - Voltar"
         )
