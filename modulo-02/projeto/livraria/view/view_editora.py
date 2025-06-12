@@ -44,7 +44,9 @@ def inserir() -> None:
     console.clear()
     console.rule(title="Cadastro de Editoras", align="center")
     nome = console.input("Informe o nome do editora: ")
-    editora_info = {"nome": nome}
+    endereco = console.input("Informe o endereco do editora: ")
+    telefone = console.input("Informe o telefone do editora: ")
+    editora_info = {"nome": nome, "endereco": endereco, "telefone": telefone}
     console.rule(align="center")
 
     resposta = controller.inserir(editora_info)

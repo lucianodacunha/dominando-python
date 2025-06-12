@@ -12,7 +12,9 @@ class EditoraController:
         try:
             validator(editora_info)
             nome = editora_info["nome"]
-            editora = Editora(nome)
+            endereco = editora_info["endereco"]
+            telefone = editora_info["telefone"]
+            editora = Editora(nome, endereco, telefone)
 
             self.dao.inserir(editora)
             return {"success": True, "message": "Registro inserido com sucesso"}
@@ -30,7 +32,9 @@ class EditoraController:
         try:
             id = int(editora_info["id"])
             nome = editora_info["nome"]
-            editora = self.dao.atualizar(id, nome)
+            endereco = editora_info["endereco"]
+            telefone = editora_info["telefone"]
+            editora = self.dao.atualizar(id, nome, endereco, telefone)
             return {"success": True, "message": editora}
         except Exception as e:
             return {"success": False, "error": str(e)}
