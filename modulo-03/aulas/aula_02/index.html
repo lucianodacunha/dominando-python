@@ -1,0 +1,198 @@
+<!-- idenfitfica o navegador -->
+<!DOCTYPE html>
+<!-- inicia o html e define o idioma -->
+<html lang="pt-br">
+    <!-- inicio do cabeçalho -->
+<head>
+    <!-- identifica caracteres de idioma e especiais (acentos, etc) -->
+    <meta charset="UTF-8">
+    <!-- identifica a resolução do device -->
+     <!-- flaticon/icon8 -->
+     <link rel="shortcut icon" href="src/assets/icone2.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- define o titulo da pagina -->
+    <title>Escola Dev</title>
+</head>
+<body>
+    <!-- cabeçalho do corpo da pagina -->
+    <header>
+        <nav>
+            <!-- lista não ordenada -->
+            <ul> 
+                <li>Inicio</li>
+                <li>Linguagens</li>
+                <li>Sobre</li>
+            </ul>
+        </nav>
+        <!-- tipo de titulo da pagina -->
+         <h1>Escola de Desenvolvedores</h1>
+         <h2>Seja Bem-Vindo a nossa Escola</h2>
+         <h3>Desenvolvedor Nivel 1</h3>
+         <h4>Desenvolvedor Nivel 2</h4>
+         <h5>Desenvolvedor Nivel 3</h5>
+         <h6>Desenvolvedor Nivel 4</h6>
+    </header>
+    <!-- inicio do corpo da pagina -->    
+    <div>
+        <!-- estrutura que receberá o conteúdo -->
+        <main>
+            <h2>Cursos mais Procurados</h2>
+            <!-- cria uma linha divisória -->
+            <hr>
+            <!-- cria uma parágrafo -->
+            <p>Linguagens de Programação utilizadas</p>
+            <!-- manipula o conteúdo -->
+            <article>                
+                <div>
+                    <h2>C-Sharp</h2>
+                    <p>Uma linguagem versátil e bem estruturada</p>
+                    <!-- tratamento de imagens -->
+                     <!-- unsplah/freepik/pixabay -->
+                     <img src="./src/assets/school_tech.jpg" 
+                        alt="tecnologia" title="tecnologia"
+                        width="600">
+                </div>
+                <section>
+                    <h3>Saiba mais</h3>
+                    <!-- Lista ordenadas -->
+                     <ol type="I">
+                        <li>Criada pela Microsoft</li>
+                        <li>Lançada em 2000</li>
+                        <li>Orientada a Objetos</li>
+                        <li>Multiplataforma</li>
+                     </ol>
+                </section>
+            </article>
+            <article>                
+                <div>
+                    <h2>Python</h2>
+                    <p>Uma linguagem simples e poderosa</p>
+                    <!-- tratamento de imagens -->
+                     <!-- unsplah/freepik/pixabay -->
+                     <img src="./src/assets/school_tech.jpg" 
+                        alt="tecnologia" title="tecnologia"
+                        width="600">
+                </div>
+                <section>
+                    <h3>Saiba mais</h3>
+                    <!-- Lista ordenadas -->
+                     <ol type="I">
+                        <li>Código aberto</li>
+                        <li>Interpretada</li>
+                        <li>Tipagem dinâmica</li>
+                        <li>Versátil</li>
+                     </ol>
+                </section>
+            </article>            
+        </main>
+        <!-- conteúdo lateral -->
+        <aside>
+            <h3>Pilares da </h3>
+            <dl>
+                <dt>Abstração</dt>
+                <dd>Descrição de Abstração</dd>
+                <dt>Encapsulamento</dt>
+                <dd>Descrição de Encapsulamento</dd>
+                <dt>Descrição do Polimorfismo</dt>
+                <dd>Descrição de Herança</dd>
+            </dl>
+        </aside>
+    </div>
+    <section>
+        <!-- Formularios -->
+         <h3>Acesso Aluno</h3>
+         <form action="">
+            <input type="text" placeholder="Digite seu nome" required><br><br>
+            <input type="password" placeholder="Digite sua senha" required>
+            <button type="submit">Logar</button>
+         </form>
+         <hr>
+         <form action="">
+            <fieldset>
+                <legend>Tipos de Inputs</legend>
+                <p>Input de texto: <input type="text"></p>
+                <p>Input de senha: <input type="password"></p>
+                <p>Input de checkbox: <input type="checkbox"></p>
+                <p>Input de radio: <input type="radio"></p>
+                <p>Input de tel: <input type="tel"></p> 
+                <p>Input de email: <input type="email"></p>                 
+                <p>Input de search: <input type="search"></p> 
+                <p>Input de url: <input type="url" name="website" /></p> 
+                <p>Input de image: <input type="image" src="src/assets/enviar.png"></p> 
+                <p>Input de time: <input type="time"></p> 
+                <p>Input de date: <input type="date"></p> 
+                <p>Input de range: <input type="range"></p> 
+                <p>Input de submit: <input type="submit"></p> 
+                <p>Input de color: <input type="color"></p> 
+                <p>Input de file: <input type="file"></p> 
+                <p>Input de hidden: <input type="hidden"></p> 
+                <p>Input de number: <input type="number"></p> 
+                <p>Input de number custom: <input type="number" min="1" max="3"></p> 
+                <p>Input de radio: <input type="reset"></p>
+                <h2>Selecione uma opção</h2>
+                <select name="select" id="">
+                    <option value="">HTML</option>
+                    <option value="">Java</option>
+                    <option value="">Python</option>
+                </select>
+
+                <h2>Selecione um grupo de opções</h2>
+                <select name="Tipos" id="">
+                    <optgroup label="Linguagem">
+                        <option value="Java">Java</option>
+                        <option value="C#">C#</option>
+                    </optgroup>
+                    <optgroup label="Framework">
+                        <option value="Java">React</option>
+                        <option value="C#">Angular</option>
+                    </optgroup>                    
+                </select>
+            </fieldset>
+         </form>
+    </section>
+    <section>
+        <h3>Tabela de Cursos Rápidos</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Foto</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Python</td>
+                    <td>Code aberto</td>
+                    <td><img src="src/assets/python.jpg" alt="" width="100px"></td>
+                </tr>
+                <tr>
+                    <td>Python</td>
+                    <td>Code aberto</td>
+                    <td><img src="src/assets/python.jpg" alt="" width="100px"></td>
+                </tr>
+                <tr>
+                    <td>Python</td>
+                    <td>Code aberto</td>
+                    <td><img src="src/assets/python.jpg" alt="" width="100px"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">Desenvolvimento de Sistemas</td>
+                </tr>
+            </tfoot>
+        </table>
+    </section>
+    <footer>
+        <h3>Acesso Rápido</h3>
+        <a href="http://www.google.com.br">Página do Google</a>
+        <h3>Acesso a uma página Interna</h3>
+        <a href="dados.html">Pàgina de Dados</a>
+        <hr>
+        <h4>&copy; 2025 Tecnologia em Dev</h4>
+    </footer>
+    <!-- final do corpo da pagina -->
+</body>
+<!-- final do html -->
+</html>
