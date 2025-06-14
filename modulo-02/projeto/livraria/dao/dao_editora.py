@@ -1,66 +1,102 @@
 from model.model_editora import Editora
 from exception.exceptions import RegistroNaoEncontradoException
-from dao.connection_factory import ConnectionFactory
+from util.connection_factory import ConnectionFactory
 
 class EditoraDAO:
     def __init__(self):
         ...
-        # self.__editoras: dict[int, Editora] = dict()
-        # self.__sequence: int = 1
 
-    def inserir(self, editora: Editora) -> Editora:
-        sql = "INSERT INTO livraria.editoras (nome, endereco, telefone) values (%s, %s, %s);"
+    def inserir(self, editora: Editora) -> None:
+        sql = "INSERT INTO livraria.editoras (nome, endereco, telefone) VALUES (%s, %s, %s);"
         nome = editora.nome
         endereco = editora.endereco
         telefone = editora.telefone
+        connection = None
+        cursor = None
 
-        try:
-            conn = ConnectionFactory.get_connection()
-            cursor = conn.cursor()
+        try:            
+            connection = ConnectionFactory.get_connection()
+            cursor = connection.cursor()
             cursor.execute(sql, (nome, endereco, telefone))
-            conn.commit()
-            cursor.close()
-            # novo_id = cursor.fetchone()[0]
-
-            return None #novo_id
+            registros_inseridos = cursor.rowcount
+            connection.commit()
+            return None
         except Exception as e:
-            print(f"Erro durante o insert: {e}")
+            connection.rollback()
+            raise Exception(f"Erro durante o insert: {e}")
+        finally:
+            ConnectionFactory.close_connection(connection, cursor)
 
-        # editora.id = self.__sequence
-        # self.__editoras[editora.id] = editora
-        # self.__sequence += 1
-        # return self.__editoras[editora.id]
 
-    def listar(self) -> dict[int, Editora]:
-        sql = "SELECT nome, endereco, telefone FROM livraria.editoras;"
+    def listar(self) -> list[str]:
+        sql = "SELECT id, nome, endereco, telefone FROM livraria.editoras;"
+        connection = None
+        cursor = None
         try:
-            conn = ConnectionFatory.get_connection()
-            cursor = conn.cursor()
+            connection = ConnectionFactory.get_connection()
+            cursor = connection.cursor()
             cursor.execute(sql)
             registros = cursor.fetchall()
-            return list(registros)
+            return registros
         except Exception as e:
-            print(f"Erro ao consultar: {e}")
+            raise Exception(f"Erro ao consultar: {e}")
+        finally:
+            ConnectionFactory.close_connection(connection, cursor)
 
-        # if not self.__editoras:
-        #     raise RegistroNaoEncontradoException("Nenhum autor cadastrado")
-        # return self.__editoras.values()
 
-    def atualizar(self, id: int, nome: str, endereco: str, telefone: str) -> Editora:
-        editora = self.buscar_por_id(id)
-        editora.nome = nome
-        editora.endereco = endereco
-        editora.telefone = telefone
-        return editora
+    def atualizar(self, id: int, nome: str, endereco: str, telefone: str) -> None:
+        sql = "UPDATE livraria.editoras SET nome = %s, endereco = %s, telefone = %s WHERE id = %s;"
+        connection = None
+        cursor = None
 
-    def excluir(self, id: int) -> Editora:
-        if self.__editoras.get(id, 0):
-            return self.__editoras.pop(id, 0)
-        else:
-            raise RegistroNaoEncontradoException("Registro não encontrado")
+        try:
+            connection = ConnectionFactory.get_connection()
+            cursor = connection.cursor()
+            cursor.execute(sql, (nome, endereco, telefone, id))
+            registros_atualizados = cursor.rowcount
+            connection.commit()
+            if not registros_atualizados:
+                raise Exception("Id não encontrado")            
+        except Exception as e:
+            connection.rollback()
+            raise Exception(f"Erro ao atualizar, {e}")
+        finally:
+            ConnectionFactory.close_connection(connection, cursor)
 
-    def buscar_por_id(self, id: int) -> Editora:
-        if self.__editoras.get(id, 0):
-            return self.__editoras.get(id)
-        else:
-            raise RegistroNaoEncontradoException("Registro não encontrado")
+
+    def excluir(self, id: int) -> None:
+        sql = "DELETE FROM livraria.editoras WHERE id = %s;"
+        connection = None
+        cursor = None
+
+        try:
+            connection = ConnectionFactory.get_connection()
+            cursor = connection.cursor()
+            cursor.execute(sql, (id,))
+            connection.commit()
+            registro_excluidos = cursor.rowcount
+            if not registro_excluidos:
+                raise Exception(f"Id não encontrado")
+        except Exception as e:
+            raise Exception(f"Erro ao excluir um registro, {e}")
+        finally:
+            ConnectionFactory.close_connection(connection, cursor)
+
+
+    def listar_por_id(self, id: int) -> Editora:
+        sql = "SELECT id, nome, endereco, telefone FROM livraria.editoras WHERE id = %s;"
+        connection = None
+        cursor = None
+
+        try:
+            connection = ConnectionFactory.get_connection()
+            cursor = connection.cursor()
+            cursor.execute(sql, (id, ))
+            editora = cursor.fetchone()
+            if not editora:
+                raise Exception(f"Id não encontrado") 
+            return editora
+        except Exception as e:
+            raise Exception(f"Erro ao buscar por id, {e}")
+        finally:
+            ConnectionFactory.close_connection(connection, cursor)

@@ -1,7 +1,7 @@
 from rich.console import Console
 from view import view_autor
 from view import view_categoria
-from view import view_editora
+from view.view_editora import EditoraView
 from view import view_livro
 
 
@@ -29,7 +29,7 @@ def menu() -> None:
             case "2":
                 view_categoria.menu()
             case "3":
-                view_editora.menu()
+                EditoraView().menu()
             case "4":
                 view_livro.menu()
             case "0":

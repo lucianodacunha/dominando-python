@@ -1,9 +1,11 @@
 class Autor:
-    __slots__ = ("__id", "__nome", "__biografia")
+    __slots__ = ("__id", "__nome", "__email", "__telefone", "__bio")
 
-    def __init__(self, nome: str, biografia: str) -> None:
+    def __init__(self, nome: str, bio: str) -> None:
         self.nome = nome
-        self.biografia = biografia
+        self.email = email
+        self.telefone = telefone
+        self.bio = bio
 
     @property
     def id(self) -> int:
@@ -24,12 +26,28 @@ class Autor:
         self.__nome = nome
 
     @property
-    def biografia(self) -> str:
-        return self.__biografia
+    def email(self) -> str:
+        return self.__email
 
-    @biografia.setter
-    def biografia(self, biografia: str) -> None:
-        self.__biografia = biografia
+    @email.setter
+    def email(self, email) -> None:
+        self.__email = email
+
+    @property
+    def telefone(self) -> str:
+        return self.__telefone
+
+    @telefone.setter
+    def telefone(self, telefone) -> None:
+        self.__telefone = telefone
+
+    @property
+    def bio(self) -> str:
+        return self.__bio
+
+    @bio.setter
+    def bio(self, bio: str) -> None:
+        self.__bio = bio
 
     def __str__(self) -> str:
         return f"{str(self.id).zfill(2)} - {self.nome}"

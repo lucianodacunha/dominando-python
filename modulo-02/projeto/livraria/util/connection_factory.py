@@ -17,3 +17,15 @@ class ConnectionFactory:
             return conn
         except Exception as e:
             print(f"Erro ao criar a conexão: {e}")
+
+    @staticmethod
+    def close_connection(connection, cursor):
+        try:
+            if cursor:
+                cursor.close()
+            if connection:
+                connection.close()
+        except Exception as e:
+            print(f"Erro ao fechar conexão e cursor, {e}")
+
+    
