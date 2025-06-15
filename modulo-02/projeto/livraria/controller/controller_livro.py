@@ -53,10 +53,10 @@ class LivroController:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def buscar_por_id(self, livro_info: dict):
+    def listar_por_id(self, livro_info: dict):
         try:
             id = int(livro_info["id"])
-            livro = self.dao.buscar_por_id(id)
+            livro = self.dao.listar_por_id(id)
             return {"success": True, "message": livro}
         except Exception as e:
             return {"success": False, "error": str(e)}

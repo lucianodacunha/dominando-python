@@ -190,7 +190,7 @@ class LivroView:
             livro_info = {"id": id}
 
             # atualizar
-            resposta = self.controller.buscar_por_id(livro_info)
+            resposta = self.controller.listar_por_id(livro_info)
             if resposta["success"]:
                 message = f"Id: {resposta["message"][0]}\n"
                 message += f"Titulo: {resposta["message"][1]}\n"

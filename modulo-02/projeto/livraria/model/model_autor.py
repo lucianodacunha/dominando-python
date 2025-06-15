@@ -1,7 +1,7 @@
 class Autor:
     __slots__ = ("__id", "__nome", "__email", "__telefone", "__bio")
 
-    def __init__(self, nome: str, bio: str) -> None:
+    def __init__(self, nome: str, email: str, telefone: str, bio: str) -> None:
         self.nome = nome
         self.email = email
         self.telefone = telefone

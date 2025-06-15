@@ -12,8 +12,10 @@ class AutorController:
         try:
             validator(autor_info)
             nome = autor_info["nome"]
-            biografia = autor_info["biografia"]
-            autor = Autor(nome, biografia)
+            email = autor_info["email"]
+            telefone = autor_info["telefone"]
+            bio = autor_info["bio"]
+            autor = Autor(nome, email, telefone, bio)
 
             self.dao.inserir(autor)
             return {"success": True, "message": "Registro inserido com sucesso"}
@@ -31,8 +33,10 @@ class AutorController:
         try:
             id = int(autor_info["id"])
             nome = autor_info["nome"]
-            biografia = autor_info["biografia"]
-            autor = self.dao.atualizar(id, nome, biografia)
+            email = autor_info["email"]
+            telefone = autor_info["telefone"]
+            bio = autor_info["bio"]
+            autor = self.dao.atualizar(id, nome, email, telefone, bio)
             return {"success": True, "message": autor}
         except Exception as e:
             return {"success": False, "error": str(e)}
@@ -45,10 +49,10 @@ class AutorController:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def buscar_por_id(self, autor_info: dict):
+    def listar_por_id(self, autor_info: dict):
         try:
             id = int(autor_info["id"])
-            autor = self.dao.buscar_por_id(id)
+            autor = self.dao.listar_por_id(id)
             return {"success": True, "message": autor}
         except Exception as e:
             return {"success": False, "error": str(e)}

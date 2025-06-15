@@ -1,5 +1,5 @@
 from rich.console import Console
-from view import view_autor
+from view.view_autor import AutorView
 from view.view_categoria import CategoriaView
 from view.view_editora import EditoraView
 from view.view_livro import LivroView
@@ -25,7 +25,7 @@ def menu() -> None:
         opcao = console.input("\nInforme a opção desejada: ")
         match opcao:
             case "1":
-                view_autor.menu()
+                AutorView().menu()
             case "2":
                 CategoriaView().menu()
             case "3":

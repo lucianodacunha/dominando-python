@@ -89,7 +89,7 @@ class LivroDAO:
         finally:
             ConnectionFactory.close_connection(connection, cursor)
 
-    def buscar_por_id(self, id: int) -> Livro:
+    def listar_por_id(self, id: int) -> Livro:
         sql = """SELECT 
             id, titulo, resumo, ano, paginas, isbn 
             FROM livraria.livros WHERE id = %s;"""
