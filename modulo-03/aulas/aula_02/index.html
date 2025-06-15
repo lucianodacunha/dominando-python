@@ -10,6 +10,8 @@
      <!-- flaticon/icon8 -->
      <link rel="shortcut icon" href="src/assets/icone2.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css externo -->
+     <link rel="stylesheet" href="./src/css/style.css">
     <!-- define o titulo da pagina -->
     <title>Escola Dev</title>
 </head>
@@ -19,9 +21,9 @@
         <nav>
             <!-- lista não ordenada -->
             <ul> 
-                <li>Inicio</li>
-                <li>Linguagens</li>
-                <li>Sobre</li>
+                <li><a>Inicio</a></li>
+                <li><a>Linguagens</a></li>
+                <li><a>Sobre</a></li>
             </ul>
         </nav>
         <!-- tipo de titulo da pagina -->
@@ -33,7 +35,7 @@
          <h6>Desenvolvedor Nivel 4</h6>
     </header>
     <!-- inicio do corpo da pagina -->    
-    <div>
+    <div class="container">
         <!-- estrutura que receberá o conteúdo -->
         <main>
             <h2>Cursos mais Procurados</h2>
@@ -152,7 +154,7 @@
     </section>
     <section>
         <h3>Tabela de Cursos Rápidos</h3>
-        <table border="1">
+        <table border="1" id="tb"> 
             <thead>
                 <tr>
                     <th>Nome</th>

@@ -1,0 +1,24 @@
+body {
+    background-color: rgba(0, 195, 255, 0.514);
+}
+
+h2/*seletor*/#valor-unico/*identificador*/{ /*bloco*/
+    color: /*propriedade*/ red; /*valor*/
+}
+
+h2.classe-generica/*classe*/{
+    font-size: 30px;
+    color: green;
+}
+
+#texto-amarelo-bold {
+    color: yellow;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.textos-azuis-sublinhados {
+    color: blue;
+    text-decoration: underline;
+    font-size: 30px;
+}
