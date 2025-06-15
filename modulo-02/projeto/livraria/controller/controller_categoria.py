@@ -27,6 +27,7 @@ class CategoriaController:
 
     def atualizar(self, categoria_info: dict) -> dict:
         try:
+            validator(categoria_info)
             id = int(categoria_info["id"])
             nome = categoria_info["nome"]
             categoria = self.dao.atualizar(id, nome)

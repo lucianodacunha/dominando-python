@@ -1,5 +1,5 @@
 class Livro:
-    __slot__ = ("__titulo", "__resumo", "__ano", "__paginas", "__isbn")
+    __slot__ = ("__id", "__titulo", "__resumo", "__ano", "__paginas", "__isbn")
 
     def __init__(
         self, titulo: str, resumo: str, ano: int, paginas: int, isbn: str

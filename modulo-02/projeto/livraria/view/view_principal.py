@@ -1,8 +1,8 @@
 from rich.console import Console
 from view import view_autor
-from view import view_categoria
+from view.view_categoria import CategoriaView
 from view.view_editora import EditoraView
-from view import view_livro
+from view.view_livro import LivroView
 
 
 console = Console()
@@ -27,11 +27,11 @@ def menu() -> None:
             case "1":
                 view_autor.menu()
             case "2":
-                view_categoria.menu()
+                CategoriaView().menu()
             case "3":
                 EditoraView().menu()
             case "4":
-                view_livro.menu()
+                LivroView().menu()
             case "0":
                 break
             case _:

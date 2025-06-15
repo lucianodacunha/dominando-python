@@ -15,5 +15,11 @@ def validator(infos: dict) -> bool:
                     return True
                 except:
                     raise Exception(f"{key}, tipo incorreto")
+            case "id":
+                try:
+                    int(infos["id"])
+                    return True
+                except:
+                    raise Exception(f"{key}, tipo incorreto")
             case _:
                 return True
