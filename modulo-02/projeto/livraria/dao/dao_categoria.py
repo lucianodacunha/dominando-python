@@ -1,4 +1,5 @@
-from model.model_categoria import Categoria
+# from model.model_categoria import Categoria
+from model.categoria import Categoria
 from exception.exceptions import RegistroNaoEncontradoException
 from util.connection_factory import ConnectionFactory
 
@@ -35,9 +36,10 @@ class CategoriaDAO:
             connection = ConnectionFactory.get_connection()
             cursor = connection.cursor()
             cursor.execute(sql)
-            categorias = cursor.fetchall()
-            if not categorias:
-                raise RegistroNaoEncontradoException("Nenhum registro encontrado")
+            rows = cursor.fetchall()
+            if not rows:
+                raise RegistroNaoEncontradoException("Nenhum registro encontrado")            
+            categorias = [Categoria.from_row(row) for row in rows]
             return categorias
         except RegistroNaoEncontradoException as e:
             raise RegistroNaoEncontradoException(f"{e}")
@@ -46,8 +48,10 @@ class CategoriaDAO:
         finally:
             ConnectionFactory.close_connection(connection, cursor)
 
-    def atualizar(self, id: int, nome: str) -> None:
+    def atualizar(self, categoria: Categoria) -> None:
         sql = "UPDATE livraria.categorias SET nome = %s WHERE id = %s;"
+        id = categoria.id
+        nome = categoria.none
         connection = None
         cursor = None
 

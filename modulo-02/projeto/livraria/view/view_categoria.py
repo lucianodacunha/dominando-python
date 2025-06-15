@@ -72,7 +72,7 @@ class CategoriaView:
             message += f"{'Id'.rjust(2)} | {'Nome da Categoria'.ljust(30)}"
             for categoria in resposta["message"]:
                 message += (
-                    f"\n{str(categoria[0]).rjust(2)}" + f" | {categoria[1].ljust(30)}"
+                    f"\n{str(categoria.id).rjust(2)}" + f" | {categoria.nome.ljust(30)}"
                 )
         else:
             message += f"[red]{resposta["error"]}"

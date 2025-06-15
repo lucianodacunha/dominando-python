@@ -10,8 +10,7 @@ class CategoriaController:
     def inserir(self, categoria_info: dict) -> dict:
         try:
             validator(categoria_info)
-            nome = categoria_info["nome"]
-            categoria = Categoria(nome)
+            categoria = Categoria(**categoria_info)
 
             self.dao.inserir(categoria)
             return {"success": True, "message": "Registro inserido com sucesso"}
@@ -28,9 +27,8 @@ class CategoriaController:
     def atualizar(self, categoria_info: dict) -> dict:
         try:
             validator(categoria_info)
-            id = int(categoria_info["id"])
-            nome = categoria_info["nome"]
-            categoria = self.dao.atualizar(id, nome)
+            categoria = Categoria(**categoria_info)
+            categoria = self.dao.atualizar(categoria)
             return {"success": True, "message": categoria}
         except Exception as e:
             return {"success": False, "error": str(e)}
